@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import api from '../api'
+import api from '../../../api'
 import { useHistory } from 'react-router-dom'
-import QualitiesList from './qualitiesList'
+import QualitiesList from '../../ui/qualities/qualitiesList'
 
 const UserPage = ({ userId }) => {
     const history = useHistory()
@@ -11,7 +11,7 @@ const UserPage = ({ userId }) => {
         api.users.getById(userId).then((data) => setUser(data))
     }, [])
     const handleClick = () => {
-        history.push('/users')
+        history.push(`/users/${userId}/edit`)
     }
     if (user) {
         return (
@@ -22,7 +22,7 @@ const UserPage = ({ userId }) => {
                 <p>completedMeetings: {user.completedMeetings}</p>
                 <h2>Rate: {user.rate}</h2>
                 <button className="btn btn-outline-dark" onClick={handleClick}>
-                    Все пользователи
+                    Изменить
                 </button>
             </div>
         )
@@ -31,8 +31,8 @@ const UserPage = ({ userId }) => {
     }
 }
 
-export default UserPage
-
 UserPage.propTypes = {
     userId: PropTypes.string.isRequired
 }
+
+export default UserPage
