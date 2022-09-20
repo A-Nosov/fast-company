@@ -5,16 +5,21 @@ import UserPage from '../components/page/userPage'
 import EditUserPage from '../components/page/editUserPage/editUserPage'
 
 const Users = () => {
-    const { userId, edit } = useParams()
-    if (userId) {
-        if (edit) {
-            return <EditUserPage userId={userId} />
-        } else {
-            return <UserPage userId={userId} />
-        }
-    } else {
-        return <UsersListPage />
-    }
+    const params = useParams()
+    const { userId, edit } = params
+    return (
+        <>
+            {userId ? (
+                edit ? (
+                    <EditUserPage />
+                ) : (
+                    <UserPage userId={userId} />
+                )
+            ) : (
+                <UsersListPage />
+            )}
+        </>
+    )
 }
 
 export default Users
