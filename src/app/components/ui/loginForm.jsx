@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import TextField from '../common/form/textField'
+import React, { useEffect, useState } from 'react'
 import { validator } from '../../utils/validator'
+import TextField from '../common/form/textField'
 import CheckBoxField from '../common/form/checkBoxField'
 
 const LoginForm = () => {
-    const [data, setData] = useState({ email: '', password: '', stayOn: false })
+    const [data, setData] = useState({
+        email: '',
+        password: '',
+        stayOn: false
+    })
     const [errors, setErrors] = useState({})
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -12,29 +16,31 @@ const LoginForm = () => {
             [target.name]: target.value
         }))
     }
-
     const validatorConfig = {
         email: {
             isRequired: {
-                massage: 'Электронная почта обязательна для заполнения'
+                message: 'Электронная почта обязательна для заполнения'
             },
-            isEmail: { massage: 'Email введен некорректно' }
+            isEmail: {
+                message: 'Email введен некорректно'
+            }
         },
         password: {
-            isRequired: { massage: 'Пароль обязателен для заполнения' },
+            isRequired: {
+                message: 'Пароль обязателен для заполнения'
+            },
             isCapitalSymbol: {
-                massage: 'Пароль должен содержать хотя бы одну заглавную букву'
+                message: 'Пароль должен содержать хотя бы одну заглавную букву'
             },
             isContainDigit: {
-                massage: 'Пароль должен содержать хотя бы одно число'
+                message: 'Пароль должен содержать хотя бы одно число'
             },
             min: {
-                massage: 'Пароль должен состоять минимум из 8 символов',
+                message: 'Пароль должен состоять минимум из 8 символов',
                 value: 8
             }
         }
     }
-
     useEffect(() => {
         validate()
     }, [data])
@@ -76,9 +82,9 @@ const LoginForm = () => {
                 Оставаться в системе
             </CheckBoxField>
             <button
+                className="btn btn-primary w-100 mx-auto"
                 type="submit"
                 disabled={!isValid}
-                className="btn btn-primary w-100 mx-auto"
             >
                 Submit
             </button>

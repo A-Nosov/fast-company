@@ -1,6 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 import PropTypes from 'prop-types'
+
 const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
     const optionsArray =
         !Array.isArray(options) && typeof options === 'object'
@@ -10,7 +11,6 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
     const handleChange = (value) => {
         onChange({ name, value })
     }
-
     return (
         <div className="mb-4">
             <label className="form-label">{label}</label>
@@ -34,4 +34,5 @@ MultiSelectField.propTypes = {
     label: PropTypes.string,
     defaultValue: PropTypes.array
 }
+
 export default MultiSelectField
