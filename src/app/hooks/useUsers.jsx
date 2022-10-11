@@ -10,14 +10,12 @@ export const useUser = () => {
 }
 
 const UserProvider = ({ children }) => {
-    const [users, setUsers] = useState()
-    const [isLoading, setLodaing] = useState(true)
+    const [users, setUsers] = useState([])
+    const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-
     useEffect(() => {
         getUsers()
     }, [])
-
     useEffect(() => {
         if (error !== null) {
             toast(error)
@@ -28,19 +26,19 @@ const UserProvider = ({ children }) => {
         try {
             const { content } = await userService.get()
             setUsers(content)
-            setLodaing(false)
+            setLoading(false)
         } catch (error) {
-            errorCathcer(error)
+            errorCatcher(error)
         }
     }
-
-    function errorCathcer(error) {
+    function errorCatcher(error) {
         const { message } = error.response.data
         setError(message)
+        setLoading(false)
     }
     return (
         <UserContext.Provider value={{ users }}>
-            {!isLoading ? children : 'Loading'}
+            {!isLoading ? children : 'Loading...'}
         </UserContext.Provider>
     )
 }
