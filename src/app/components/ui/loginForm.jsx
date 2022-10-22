@@ -13,35 +13,24 @@ const LoginForm = () => {
         stayOn: false
     })
     const [errors, setErrors] = useState({})
-    const { signIn } = useAuth()
+    const [enterError, setEnterError] = useState(null)
+    const { logIn } = useAuth()
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }))
+        setEnterError(null)
     }
     const validatorConfig = {
         email: {
             isRequired: {
                 message: 'Электронная почта обязательна для заполнения'
-            },
-            isEmail: {
-                message: 'Email введен некорректно'
             }
         },
         password: {
             isRequired: {
                 message: 'Пароль обязателен для заполнения'
-            },
-            isCapitalSymbol: {
-                message: 'Пароль должен содержать хотя бы одну заглавную букву'
-            },
-            isContainDigit: {
-                message: 'Пароль должен содержать хотя бы одно число'
-            },
-            min: {
-                message: 'Пароль должен состоять минимум из 8 символов',
-                value: 8
             }
         }
     }
@@ -60,10 +49,14 @@ const LoginForm = () => {
         const isValid = validate()
         if (!isValid) return
         try {
-            await signIn(data)
-            history.push('/')
+            await logIn(data)
+            history.push(
+                history.location.state.from.pathname
+                    ? history.location.state.from.pathname
+                    : '/'
+            )
         } catch (error) {
-            setErrors(error)
+            setEnterError(error.message)
         }
     }
     return (
@@ -90,10 +83,11 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
+            {enterError && <p className="text-dabger">{enterError}</p>}
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || enterError}
             >
                 Submit
             </button>
