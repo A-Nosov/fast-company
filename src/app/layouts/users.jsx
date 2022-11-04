@@ -15,10 +15,10 @@ const Users = () => {
             <UserProvider>
                 {userId ? (
                     edit ? (
-                        userId !== currentUser._id ? (
-                            <Redirect to={`/users/${currentUser._id}/edit`} />
-                        ) : (
+                        userId === currentUser._id ? (
                             <EditUserPage />
+                        ) : (
+                            <Redirect to={`/users/${currentUser._id}/edit`} />
                         )
                     ) : (
                         <UserPage userId={userId} />
