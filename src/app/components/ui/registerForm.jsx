@@ -21,7 +21,6 @@ const RegisterForm = () => {
         qualities: [],
         licence: false
     })
-
     const qualities = useSelector(getQualities())
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
@@ -32,7 +31,6 @@ const RegisterForm = () => {
         label: p.name,
         value: p._id
     }))
-
     const [errors, setErrors] = useState({})
 
     const handleChange = (target) => {
@@ -52,7 +50,7 @@ const RegisterForm = () => {
         },
         name: {
             isRequired: {
-                message: 'Имя обязательна для заполнения'
+                message: 'Имя обязательно для заполнения'
             },
             min: {
                 message: 'Имя должно состоять минимум из 3 символов',
@@ -106,6 +104,7 @@ const RegisterForm = () => {
         }
         dispatch(signUp(newData))
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <TextField
